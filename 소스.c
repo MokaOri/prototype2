@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+int z = 0;
 int crecrt = 0;
 int monster = 0;
 int used = 0;
@@ -16,12 +17,19 @@ int CrtC = 100;
 int vil2 = 1;
 char key2;
 int stop = 0;
-int Gold = 0;
+int Gold = 10000000;
 int Hp = 100;
 int NHp = 100;
 int Atk = 5;
 int Def = 0;
 int Crt = 0;
+void CursorView() {
+	HANDLE consolHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+	cursorInfo.dwSize = 1;
+	cursorInfo.bVisible = 0;
+	SetConsoleCursorInfo(consolHandle , &cursorInfo);
+}
 void gotoxy(int x, int y) {
 
 	COORD pos = { x,y };
@@ -29,6 +37,7 @@ void gotoxy(int x, int y) {
 
 }
 int map[60][19] = {
+	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -87,8 +96,7 @@ int map[60][19] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}
+	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1}
 };
 int player[3][4] = {
 	{0,3,0,3,},
@@ -159,14 +167,32 @@ int start[60][19] = {
 };
 int encounter = 0;
 int pos = 0;
+void Load_Text(const char* text) 
+{
+	FILE* file = fopen(text, "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, file); 
+	printf("%s", buffer);
+	fclose(file);
+}
+
+
 void dog() {
 	int mlife = 20;
 	int matk = 5;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("wow.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read); 
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
+		if (z == 0) {
+			gotoxy(0, 0);
+		}
 		printf("플레이어의 공격!\n\n");
 		Sleep(500);
 		if (crecrt <= Crt) {
@@ -184,8 +210,847 @@ void dog() {
 		Sleep(500);
 		printf("개의 공격!\n\n");
 		Sleep(500);
-		printf("플레이어가 %d의 피해를 입었다.\n\n", matk);
-		NHp -= matk;
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		z = 1;
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	z = 0;
+	if (mlife == 0) {
+		printf("승리! 100골드를 흭득했다!\n\n");
+		Gold += 100;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void slime() {
+	int mlife = 80;
+	int matk = 10;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("슬라임의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 200골드를 흭득했다!\n\n");
+		Gold += 200;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void frug() {
+	int mlife = 90;
+	int matk = 12;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("개구리의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 300골드를 흭득했다!\n\n");
+		Gold += 300;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void goat() {
+	int mlife = 100;
+	int matk = 15;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("염소에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("염소의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 400골드를 흭득했다!\n\n");
+		Gold += 400;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void bat() {
+	int mlife = 200;
+	int matk = 20;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("박쥐의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 500골드를 흭득했다!\n\n");
+		Gold += 500;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void lizard() {
+	int mlife = 300;
+	int matk = 40;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("도마뱀의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 700골드를 흭득했다!\n\n");
+		Gold += 700;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void ork() {
+	int mlife = 350;
+	int matk = 50;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("오크에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("오크의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 1000골드를 흭득했다!\n\n");
+		Gold += 1000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void imp() {
+	int mlife = 500;
+	int matk = 80;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("임프에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("임프의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 1500골드를 흭득했다!\n\n");
+		Gold += 1500;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void undead() {
+	int mlife = 800;
+	int matk = 100;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("좀비의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 2000골드를 흭득했다!\n\n");
+		Gold += 2000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void deathknight() {
+	int mlife = 1000;
+	int matk = 120;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("죽음의 기사의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 3000골드를 흭득했다!\n\n");
+		Gold += 3000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void dragonfly() {
+	int mlife = 1500;
+	int matk = 150;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("용파리의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 8000골드를 흭득했다!\n\n");
+		Gold += 8000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void dragon() {
+	int mlife = 2000;
+	int matk = 200;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("드래곤의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 10000골드를 흭득했다!\n\n");
+		Gold += 10000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void satan() {
+	int mlife = 2500;
+	int matk = 250;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("사탄의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 15000골드를 흭득했다!\n\n");
+		Gold += 15000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void demon() {
+	int mlife = 3000;
+	int matk = 300;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("악마에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("악마의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 20000골드를 흭득했다!\n\n");
+		Gold += 20000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void deathking() {
+	int mlife = 5000;
+	int matk = 400;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("사왕의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 50000골드를 흭득했다!\n\n");
+		Gold += 50000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void GOD() {
+	int mlife = 10000;
+	int matk = 500;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("신에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("신의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
+
+	}
+	if (mlife == 0) {
+		printf("승리! 100000골드를 흭득했다!\n\n");
+		Gold += 100000;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
+		}
+	}
+}
+void lastboss() {
+	int mlife = 20000;
+	int matk = 800;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	while (1) {
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
+			break;
+		}
+		Sleep(500);
+		printf("최종보스의 공격!\n\n");
+		Sleep(500);
+		if (matk <= Def) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else {
+			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
+			NHp -= matk - Def;
+		}
 		if (NHp <= 0) {
 			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
 			printf("press space to end");
@@ -206,24 +1071,6 @@ void dog() {
 		}
 	}
 }
-void slime() {}
-void frug() {}
-void goat() {}
-void bat() {}
-void lizard() {}
-void ork() {}
-void imp() {}
-void undead() {}
-void deathknight() {}
-void dragonfly() {}
-void dragon() {}
-void satan() {}
-void demon() {}
-void deathking() {}
-void GOD() {}
-void lastboss() {}
-
-
 
 
 
@@ -305,6 +1152,10 @@ void serch() {
 		}
 		gotoxy(40, 13);
 		printf("싸운다                           도망친다");
+		if (z >= 50) {
+			gotoxy(49, 17);
+			printf("체력 %d 소모", NHp / 2);
+		}
 		gotoxy(z, c);
 		printf("☞");
 		key = _getch();
@@ -343,6 +1194,7 @@ void serch() {
 				break;
 			}
 			else if (z == 71) {
+				NHp = NHp / 2;
 				break;
 			}
 		}
@@ -352,7 +1204,6 @@ void startm() {
 	int key;
 	int z = 38, c = 10;
 	while (1) {
-		
 		system("mode con cols=120 lines=40");
 		for (int i = 0; i < 19; i++) {
 			for (int j = 0; j < 60; j++) {
@@ -414,7 +1265,7 @@ void battle() {
 	srand((unsigned int)time(NULL));
 	system("cls");
 	while (1) {
-		
+		system("mode con cols=120 lines=40");
 		pos = rand();
 		
 		if (pos < used / 100000 - bravo) {
@@ -525,7 +1376,7 @@ void shop(){
 		}
 		else if (z == 66) {
 			gotoxy(48, 16);
-			printf("가격 : %d. 방어력 5 증가", DefC);
+			printf("가격 : %d. 방어력 2 증가", DefC);
 		}
 		else if (z == 77) {
 			gotoxy(46, 16);
@@ -585,12 +1436,12 @@ void shop(){
 				if (Gold >= DefC) {
 					Gold -= DefC;
 					DefC += DefC;
-					Def += 5;
+					Def += 2;
 					used += DefC;
 				}
 			}
 			else if (z == 77) {
-				if (Gold > CrtC) {
+				if (Gold > CrtC && Crt <= 90) {
 					Gold -= CrtC;
 					CrtC += CrtC;
 					Crt += 10;
@@ -606,7 +1457,6 @@ void shop(){
 void state(){
 	int key;
 	while (1) {
-
 		system("mode con cols=120 lines=40");
 		
 		stop = 2;
@@ -717,12 +1567,13 @@ void maps() {
 	encounter = 0;
 	srand((unsigned int)time(NULL));
 	while (1) {
-		
 		system("mode con cols=120 lines=40");
 		for (int i = 0; i < 19; i++) {
 			for (int j = 0; j < 60; j++) {
 				if (map[j][i] == 0) printf("  ");
 				else if (map[j][i] == 1) printf("■");
+				else if (map[j][i] == 2) printf("◀");
+				else if (map[j][i] == 3) printf("▶");
 
 			}
 			printf("\n");
@@ -769,11 +1620,14 @@ void maps() {
 
 
 int main() {
+	CursorView();
+
 	while (1) {
+		
+		system("mode con cols=120 lines=40");
 		if (stop == 0) startm();
 		if (stop == 1) return 0;
 		maps();
-
 
 
 
