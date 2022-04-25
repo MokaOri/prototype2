@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+int crecrt = 0;
 int monster = 0;
 int used = 0;
 int Heal = 100;
@@ -15,7 +16,7 @@ int CrtC = 100;
 int vil2 = 1;
 char key2;
 int stop = 0;
-int Gold = 10000000;
+int Gold = 0;
 int Hp = 100;
 int NHp = 100;
 int Atk = 5;
@@ -159,36 +160,49 @@ int start[60][19] = {
 int encounter = 0;
 int pos = 0;
 void dog() {
-	int z = 38, c = 13;
-	int key;
+	int mlife = 20;
+	int matk = 5;
+	srand((unsigned int)time(NULL));
+	system("cls");
 	while (1) {
-		system("cls");
-		gotoxy(46, 5);
-		printf(" 야생의 개를 발견했다.");
-		gotoxy(40, 13);
-		printf("싸운다                           도망친다");
-		gotoxy(z, c);
-		printf("☞");
-		key = _getch();
-		switch (key) {
-		case 75:
-			if (z <= 50) break;
-			z -= 33;
-			break;
-		case 77:
-			if (z >= 50) break;
-			z += 33;
-			break;
-		default:
+		crecrt = rand() % 100 + 1;
+		Sleep(500);
+		printf("플레이어의 공격!\n\n");
+		Sleep(500);
+		if (crecrt <= Crt) {
+			printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+			mlife -= Atk * 2;
+		}
+		else {
+			printf("개에게 %d의 피해를 입혔다.\n\n", Atk);
+			mlife -= Atk;
+		}
+		if (mlife <= 0) {
+			mlife = 0;
 			break;
 		}
-		if (GetAsyncKeyState(VK_SPACE)) {
+		Sleep(500);
+		printf("개의 공격!\n\n");
+		Sleep(500);
+		printf("플레이어가 %d의 피해를 입었다.\n\n", matk);
+		NHp -= matk;
+		if (NHp <= 0) {
+			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
+			printf("press space to end");
+			stop = 1;
+			while (1) {
+				if (GetAsyncKeyState(VK_SPACE)) break;
+			}
+			break;
+		}
 
-			if (z <= 50) {
-			}
-			else if (z >= 50) {
-				break;
-			}
+	}
+	if (mlife == 0) {
+		printf("승리! 100골드를 흭득했다!\n\n");
+		Gold += 100;
+		printf("press space to continue");
+		while (1) {
+			if (GetAsyncKeyState(VK_SPACE)) break;
 		}
 	}
 }
@@ -308,9 +322,27 @@ void serch() {
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
 
-			if (z <= 50) {
+			if (z == 38) {
+				if (monster == 0) dog();
+				else if (monster == 1) slime();
+				else if (monster == 2) frug();
+				else if (monster == 3) goat();
+				else if (monster == 4) bat();
+				else if (monster == 5) lizard();
+				else if (monster == 6) ork();
+				else if (monster == 7) imp();
+				else if (monster == 8) undead();
+				else if (monster == 9) deathknight();
+				else if (monster == 10) dragonfly();
+				else if (monster == 11) dragon();
+				else if (monster == 12) satan();
+				else if (monster == 13) demon();
+				else if (monster == 14) deathking();
+				else if (monster == 15) GOD();
+				else if (monster == 16) lastboss();
+				break;
 			}
-			else if (z >= 50) {
+			else if (z == 71) {
 				break;
 			}
 		}
@@ -385,77 +417,77 @@ void battle() {
 		
 		pos = rand();
 		
-		if (pos < used / 125 - bravo) {
+		if (pos < used / 100000 - bravo) {
 			monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 62 - bravo) {
+		else if (pos < used / 70000 - bravo) {
 			monster = 15;
 			serch();
 			break;
 		}
-		else if (pos < used / 31 - bravo) {
+		else if (pos < used / 50000 - bravo) {
 			monster = 14;
 			serch();
 			break;
 		}
-		else if (pos < used / 15 - bravo) {
+		else if (pos < used / 20000 - bravo) {
 			monster = 13;
 			serch();
 			break;
 		}
-		else if (pos < used / 7 - bravo) {
+		else if (pos < used / 10000 - bravo) {
 			monster = 12;
 			serch();
 			break;
 		}
-		else if (pos < used / 2 - bravo) {
+		else if (pos < used / 8000 - bravo) {
 			monster = 11;
 			serch();
 			break;
 		}
-		else if (pos < used * 2 - bravo) {
+		else if (pos < used / 5000 - bravo) {
 			monster = 10;
 			serch();
 			break;
 		}
-		else if (pos < used * 7 - bravo) {
+		else if (pos < used / 2000 - bravo) {
 			monster = 9;
 			serch();
 			break;
 		}
-		else if (pos < used * 15 - bravo) {
+		else if (pos < used / 1000 - bravo) {
 			monster = 8;
 			serch();
 			break;
 		}
-		else if (pos < used * 31 - bravo) {
+		else if (pos < used / 500 - bravo) {
 			monster = 7;
 			serch();
 			break;
 		}
-		else if (pos < used * 62 - bravo) {
+		else if (pos < used / 100 - bravo) {
 			monster = 6;
 			serch();
 			break;
 		}
-		else if (pos < used * 125 - bravo) {
+		else if (pos < used / 10 - bravo) {
 			monster = 5;
 			serch();
 			break;
 		}
-		else if (pos < used * 250 - bravo) {
+		else if (pos < used - bravo) {
 			monster = 4;
 			serch();
 			break;
 		}
-		else if (pos < used * 500 - bravo) {
+		else if (pos < used * 2 - bravo) {
 			monster = 3;
 			serch();
 			break;
 		}
-		else if (pos < used * 1000 - bravo) {
+		else if (pos < used * 10 - bravo) {
 			monster = 2;
 			serch();
 			break;
@@ -485,19 +517,19 @@ void shop(){
 		}
 		else if (z == 44) {
 			gotoxy(48, 16);
-			printf("가격 : %d. 공격력 2 증가", AtkC);
+			printf("가격 : %d. 공격력 10 증가", AtkC);
 		}
 		else if (z == 55) {
 			gotoxy(48, 16);
-			printf("가격 : %d. 체력 10 증가", HpC);
+			printf("가격 : %d. 체력 100 증가", HpC);
 		}
 		else if (z == 66) {
 			gotoxy(48, 16);
-			printf("가격 : %d. 방어력 1 증가", DefC);
+			printf("가격 : %d. 방어력 5 증가", DefC);
 		}
 		else if (z == 77) {
 			gotoxy(46, 16);
-			printf("가격 : %d. 치명타 확률 1% 증가", CrtC);
+			printf("가격 : %d. 치명타 확률 10% 증가", CrtC);
 		}
 		else if (z == 88) {
 			gotoxy(58, 16);
@@ -526,14 +558,14 @@ void shop(){
 		if (GetAsyncKeyState(VK_SPACE)) {
 			Sleep(100);
 			if (z == 33) {
-				if (Gold > Heal)
+				if (Gold >= Heal)
 					Gold -= Heal;
 					Heal += Heal;
 					NHp = Hp;
 					used += Heal;
 			}
 			else if (z == 44) {
-				if (Gold > AtkC) {
+				if (Gold >= AtkC) {
 					Gold -= AtkC;
 					AtkC += AtkC;
 					Atk += 10;
@@ -541,16 +573,16 @@ void shop(){
 				}
 			}
 			else if (z == 55) {
-				if (Gold > HpC) {
+				if (Gold >= HpC) {
 					Gold -= HpC;
 					HpC += HpC;
 					Hp += 100;
-					NHp += 10;
+					NHp += 100;
 					used += HpC;
 				}
 			}
 			else if (z == 66) {
-				if (Gold > DefC) {
+				if (Gold >= DefC) {
 					Gold -= DefC;
 					DefC += DefC;
 					Def += 5;
