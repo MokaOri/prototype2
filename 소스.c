@@ -3204,43 +3204,43 @@ int main() {
 		if (stop == 1) return 0;
 		maps();
 		
+		if(NHp <= 0){
+			while (1) {
+				system("mode con cols=120 lines=40");
+				system("cls");
+				gotoxy(46, 5);
+				printf("부활하시겠습니까? (1회 남음)");
+				gotoxy(40, 10);
+				printf("예                               아니요");
+				gotoxy(z, c);
+				printf("☞");
+				key = _getch();
 
-		while (1) {
-			system("mode con cols=120 lines=40");
-			system("cls");
-			gotoxy(46, 5);
-			printf("부활하시겠습니까? (1회 남음)");
-			gotoxy(40, 10);
-			printf("예                               아니요");
-			gotoxy(z, c);
-			printf("☞");
-			key = _getch();
-
-			switch (key) {
-			case 75:
-				if (z <= 50) break;
-				z -= 33;
-				break;
-			case 77:
-				if (z >= 50) break;
-				z += 33;
-				break;
-			default:
-				break;
-			}
-			if (GetAsyncKeyState(VK_SPACE)) {
-
-				if (z <= 50) {
-					NHp = Hp;
-					stop = 2;
-					maps();
+				switch (key) {
+				case 75:
+					if (z <= 50) break;
+					z -= 33;
+					break;
+				case 77:
+					if (z >= 50) break;
+					z += 33;
+					break;
+				default:
 					break;
 				}
-				else if (z >= 50) {
-					break;
+				if (GetAsyncKeyState(VK_SPACE)) {
+
+					if (z <= 50) {
+						NHp = Hp;
+						stop = 2;
+						maps();
+						break;
+					}
+					else if (z >= 50) {
+						break;
+					}
 				}
 			}
-			
 		}
 
 	}
