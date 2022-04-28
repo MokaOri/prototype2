@@ -27,7 +27,7 @@ int CrtC = 100;
 int vil2 = 1;
 char key2;
 int stop = 0;
-int Gold = 10000000;
+int Gold = 0;
 int Hp = 100;
 int NHp = 100;
 int Atk = 5;
