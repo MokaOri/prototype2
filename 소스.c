@@ -5,6 +5,16 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+
+int skillon = 0;
+int skillrand = 0;
+int skill1 = 0;
+int skill2 = 0;
+int skill3 = 0;
+int skill4 = 0;
+int skill5 = 0;
+int effcet = 0;
+int bar = 0;
 int z = 0;
 int crecrt = 0;
 int monster = 0;
@@ -176,7 +186,6 @@ void Load_Text(const char* text)
 	fclose(file);
 }
 
-
 void dog() {
 	int mlife = 20;
 	int matk = 5;
@@ -188,6 +197,7 @@ void dog() {
 	printf("%s", buffer);
 	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
 		if (z == 0) {
@@ -195,13 +205,80 @@ void dog() {
 		}
 		printf("플레이어의 공격!\n\n");
 		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("개에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
 		}
-		else {
-			printf("개에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("개에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("개에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("개에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("개에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 개에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("개에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -212,6 +289,14 @@ void dog() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("개의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -240,22 +325,100 @@ void dog() {
 	}
 }
 void slime() {
+	z = 0;
 	int mlife = 80;
 	int matk = 10;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("slime.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 슬라임에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("슬라임에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -266,6 +429,14 @@ void slime() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("슬라임의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -292,22 +463,100 @@ void slime() {
 	}
 }
 void frug() {
+	z = 0;
 	int mlife = 90;
 	int matk = 12;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("frug.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 개구리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("개구리에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -318,6 +567,14 @@ void frug() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("개구리의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -344,22 +601,100 @@ void frug() {
 	}
 }
 void goat() {
+	z = 0;
 	int mlife = 100;
 	int matk = 15;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("goat.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("염소에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("염소에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("염소에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("염소에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("염소에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("염소에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 염소에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("염소에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -370,6 +705,14 @@ void goat() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("염소의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -396,22 +739,100 @@ void goat() {
 	}
 }
 void bat() {
+	z = 0;
 	int mlife = 200;
 	int matk = 20;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("bat.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 박쥐에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("박쥐에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -422,6 +843,14 @@ void bat() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("박쥐의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -448,22 +877,100 @@ void bat() {
 	}
 }
 void lizard() {
+	z = 0;
 	int mlife = 300;
 	int matk = 40;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("lizard.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 도마뱀에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("도마뱀에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -474,6 +981,14 @@ void lizard() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("도마뱀의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -500,22 +1015,100 @@ void lizard() {
 	}
 }
 void ork() {
+	z = 0;
 	int mlife = 350;
 	int matk = 50;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("ork.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("오크에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("오크에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("오크에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("오크에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("오크에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("오크에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 오크에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("오크에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -526,6 +1119,14 @@ void ork() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("오크의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -552,22 +1153,100 @@ void ork() {
 	}
 }
 void imp() {
+	z = 0;
 	int mlife = 500;
 	int matk = 80;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("imp.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("임프에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("임프에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("임프에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("임프에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("임프에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("임프에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 임프에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("임프에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -578,6 +1257,14 @@ void imp() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("임프의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -604,22 +1291,100 @@ void imp() {
 	}
 }
 void undead() {
+	z = 0;
 	int mlife = 800;
 	int matk = 100;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("undead.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 좀비에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("좀비에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -630,6 +1395,14 @@ void undead() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("좀비의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -656,22 +1429,100 @@ void undead() {
 	}
 }
 void deathknight() {
+	z = 0;
 	int mlife = 1000;
 	int matk = 120;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("deathknight.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("죽음의 기사에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -682,6 +1533,14 @@ void deathknight() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("죽음의 기사의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -708,22 +1567,100 @@ void deathknight() {
 	}
 }
 void dragonfly() {
+	z = 0;
 	int mlife = 1500;
 	int matk = 150;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("dragonfly.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 용파리에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("용파리에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -734,6 +1671,14 @@ void dragonfly() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("용파리의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -760,22 +1705,100 @@ void dragonfly() {
 	}
 }
 void dragon() {
+	z = 0;
 	int mlife = 2000;
 	int matk = 200;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("dragon.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 드래곤에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("드래곤에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -786,6 +1809,14 @@ void dragon() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("드래곤의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -812,22 +1843,100 @@ void dragon() {
 	}
 }
 void satan() {
+	z = 0;
 	int mlife = 2500;
 	int matk = 250;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("satan.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 사탄에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("사탄에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -838,6 +1947,14 @@ void satan() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("사탄의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -864,22 +1981,100 @@ void satan() {
 	}
 }
 void demon() {
+	z = 0;
 	int mlife = 3000;
 	int matk = 300;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("demon.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("악마에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("악마에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("악마에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("악마에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("악마에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("악마에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 악마에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("악마에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -890,6 +2085,14 @@ void demon() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("악마의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -916,22 +2119,100 @@ void demon() {
 	}
 }
 void deathking() {
+	z = 0;
 	int mlife = 5000;
 	int matk = 400;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("deathking.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 사왕에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("사왕에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -942,6 +2223,14 @@ void deathking() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("사왕의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -968,22 +2257,100 @@ void deathking() {
 	}
 }
 void GOD() {
+	z = 0;
 	int mlife = 10000;
 	int matk = 500;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("GOD.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("신에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("신에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("신에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("신에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("신에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("신에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 신에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("신에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -994,6 +2361,14 @@ void GOD() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("신의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -1020,22 +2395,100 @@ void GOD() {
 	}
 }
 void lastboss() {
+	z = 0;
 	int mlife = 20000;
 	int matk = 800;
 	srand((unsigned int)time(NULL));
 	system("cls");
+	FILE* read = fopen("lastboss.txt", "r");
+	char buffer[10000] = { 0, };
+	fread(buffer, 1, 10000, read);
+	printf("%s", buffer);
+	fclose(read);
 	while (1) {
+		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
 		Sleep(500);
-		printf("플레이어의 공격!\n\n");
-		Sleep(500);
-		if (crecrt <= Crt) {
-			printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 2);
-			mlife -= Atk * 2;
+		if (z == 0) {
+			gotoxy(0, 0);
 		}
-		else {
-			printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk);
-			mlife -= Atk;
+		printf("플레이어의 공격!\n\n");
+		z = 1;
+		Sleep(500);
+		if (skillon == 0) {
+			if (crecrt <= Crt) {
+				printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+				mlife -= Atk * 2;
+			}
+			else {
+				printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk);
+				mlife -= Atk;
+			}
+		}
+		else if (skillon == 1) {
+			if (skill1 == 1 && skillrand <= 10) {
+				printf("파이어볼을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+				else {
+					printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+			}
+			else if (skill2 == 1 && skillrand > 10 && skillrand <= 15) {
+				printf("배리어를 발동!\n\n");
+				bar = 1;
+			}
+			else if (skill3 == 1 && skillrand > 15 && skillrand <= 25) {
+				printf("스톰을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+			}
+			else if (skill4 == 1 && skillrand > 25 && skillrand <= 35) {
+				printf("프로즌을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 8);
+					mlife -= Atk * 8;
+				}
+				else {
+					printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 4);
+					mlife -= Atk * 4;
+				}
+			}
+			else if (skill5 == 1 && skillrand > 35 && skillrand <= 40) {
+				printf("라이트닝을 발동!\n\n");
+				Sleep(500);
+				if (crecrt <= Crt) {
+					printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 6);
+					mlife -= Atk * 6;
+				}
+				else {
+					printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 3);
+					mlife -= Atk * 3;
+				}
+				effcet = 1;
+			}
+			else {
+				if (crecrt <= Crt) {
+					printf("치명타! 최종보스에게 %d의 피해를 입혔다.\n\n", Atk * 2);
+					mlife -= Atk * 2;
+				}
+				else {
+					printf("최종보스에게 %d의 피해를 입혔다.\n\n", Atk);
+					mlife -= Atk;
+				}
+			}
 		}
 		if (mlife <= 0) {
 			mlife = 0;
@@ -1046,6 +2499,14 @@ void lastboss() {
 		Sleep(500);
 		if (matk <= Def) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
+		}
+		else if (bar == 1) {
+			printf("플레이어가 0의 피해를 입었다.\n\n");
+			bar = 0;
+		}
+		else if (effcet == 1) {
+			printf("최종보스의 공격이 실패했다\n\n");
+			effcet = 0;
 		}
 		else {
 			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
@@ -1072,8 +2533,107 @@ void lastboss() {
 	}
 }
 
+void loading() {
+	gotoxy(41, 15);
+	printf("loading");
+	for (int i = 0; i < 10; i++) {
+		gotoxy(49 + 2 * i, 15);
+		printf("[]");
+		Sleep(250);
+	}
+}
+void skillshop() {
+	int key;
+	int z = 33, c = 10;
 
+	while (1) {
+		system("mode con cols=120 lines=40");
+		system("cls");
+		if (z == 33) {
+			gotoxy(30, 16);
+			printf("가격 : 10000. 10의 확률로 사용. 공격력의 두배의 피해를 입힌다");
+		}
+		else if (z == 44) {
+			gotoxy(30, 16);
+			printf("가격 : 15000. 5의 확률로 사용. 이번턴 상대의 공격을 방어한다");
+		}
+		else if (z == 55) {
+			gotoxy(30, 16);
+			printf("가격 : 20000. 10의 확률로 사용. 공격력의 세배의 피해를 입힌다");
+		}
+		else if (z == 66) {
+			gotoxy(30, 16);
+			printf("가격 : 40000. 10의 확률로 사용. 공격력의 네배의 피해를 입힌다");
+		}
+		else if (z == 77) {
+			gotoxy(20, 16);
+			printf("가격 : 100000. 5의 확률로 사용. 공격력의 세배의 피해를 입히고 적의 다음행동을 방해한다.");
+		}
+		else if (z == 88) {
+			gotoxy(58, 16);
+			printf("나가기");
+		}
+		gotoxy(58, 5);
+		printf("상점\n\n            보유 골드 : %d", Gold);
+		gotoxy(35, 10);
+		printf("파이어볼   배리어     스톰       프로즌     라이트닝   돌아가기");
+		gotoxy(z, c);
+		printf("☞");
+		key = _getch();
 
+		switch (key) {
+		case 75:
+			if (z == 33) break;
+			z -= 11;
+			break;
+		case 77:
+			if (z == 88) break;
+			z += 11;
+			break;
+		default:
+			break;
+		}
+		if (GetAsyncKeyState(VK_SPACE)) {
+			Sleep(100);
+			if (z == 33) {
+				if (Gold >= 10000 && skill1 == 0) {
+					skill1 = 1;
+					Gold -= 10000;
+					skillon = 1;
+				}
+			}
+			else if (z == 44) {
+				if (Gold >= 15000 && skill2 == 0) {
+					skill2 = 1;
+					Gold -= 15000;
+					skillon = 1;
+				}
+			}
+			else if (z == 55) {
+				if (Gold >= 20000 && skill3 == 0) {
+					skill3 = 1;
+					Gold -= 20000;
+					skillon = 1;
+				}
+			}
+			else if (z == 66) {
+				if (Gold >= 40000 && skill4 == 0) {
+					skill4 = 1;
+					Gold -= 40000;
+					skillon = 1;
+				}
+			}
+			else if (z == 77) {
+				if (Gold >= 100000 && skill5 == 0) {
+					skill5 = 1;
+					Gold -= 100000;
+					skillon = 1;
+				}
+			}
+			else if (z == 88) break;
+		}
+	}
+}	
 void serch() {
 	int z = 38, c = 13;
 	int key;
@@ -1306,7 +2866,7 @@ void battle() {
 		else if (pos < used / 2000 - bravo) {
 			monster = 9;
 			serch();
-			break;
+			break; 
 		}
 		else if (pos < used / 1000 - bravo) {
 			monster = 8;
@@ -1349,6 +2909,7 @@ void battle() {
 			break;
 		}
 		else if (used == 0) {
+			monster = 0;
 			serch();
 			break;
 		}
@@ -1481,15 +3042,15 @@ void state(){
 }
 void vil() {
 	int key;
-	int z = 38, c = 10;
+	int z = 33, c = 10;
 
 	while (1) {
 		system("mode con cols=120 lines=40");
 		system("cls");
 		gotoxy(58, 5);
 		printf("마을");
-		gotoxy(40, 10);
-		printf("상점       스탯       사냥터     종료");
+		gotoxy(35, 10);
+		printf("상점       스킬상점   스탯       사냥터     종료");
 		gotoxy(z, c);
 		printf("☞");
 		key = _getch();
@@ -1500,7 +3061,7 @@ void vil() {
 			z -= 11;
 			break;
 		case 77:
-			if (z >= 65) break;
+			if (z >= 70) break;
 			z += 11;
 			break;
 		default:
@@ -1508,10 +3069,11 @@ void vil() {
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
 			Sleep(100);
-			if (z <= 38) shop();
-			else if (z > 38 && z <= 49) state();
-			else if (z > 49 && z < 65) break;
-			else if (z >= 65) {
+			if (z == 33) shop();
+			else if (z == 44) skillshop();
+			else if (z == 55) state();
+			else if (z == 66) break;
+			else if (z == 77) {
 				stop = 1;
 				break;
 			}
@@ -1563,13 +3125,14 @@ void back() {
 }
 void maps() {
 	int key;
-	int x = 0, y = 14;
+	int x = 0, y = 24;
 	encounter = 0;
 	srand((unsigned int)time(NULL));
 	while (1) {
 		system("mode con cols=120 lines=40");
 		for (int i = 0; i < 19; i++) {
 			for (int j = 0; j < 60; j++) {
+				gotoxy(j * 2, i + 10);
 				if (map[j][i] == 0) printf("  ");
 				else if (map[j][i] == 1) printf("■");
 				else if (map[j][i] == 2) printf("◀");
@@ -1587,6 +3150,16 @@ void maps() {
 				else if (player[j][i] == 3) printf("↗");
 				else if (player[j][i] == 4) printf("↖");
 			}
+		}
+		gotoxy(100, 0);
+		printf("HP: %d / %d", Hp, NHp);
+		gotoxy(100, 1);
+		printf("Gold : %d", Gold);
+		gotoxy(0, 0);
+		printf("EnCounter : ");
+		for (int i = 0; i <= encounter; i++) {
+			gotoxy(12 + 2 * i, 0);
+			printf("◇");
 		}
 
 		key = _getch();
@@ -1621,22 +3194,55 @@ void maps() {
 
 int main() {
 	CursorView();
-
+	int key;
+	int z = 38, c = 10;
 	while (1) {
 		
 		system("mode con cols=120 lines=40");
 		if (stop == 0) startm();
+		if (stop == 2) loading();
 		if (stop == 1) return 0;
 		maps();
-
-
-
-
-
-
-
-
 		
+
+		while (1) {
+			system("mode con cols=120 lines=40");
+			system("cls");
+			gotoxy(46, 5);
+			printf("부활하시겠습니까? (1회 남음)");
+			gotoxy(40, 10);
+			printf("예                               아니요");
+			gotoxy(z, c);
+			printf("☞");
+			key = _getch();
+
+			switch (key) {
+			case 75:
+				if (z <= 50) break;
+				z -= 33;
+				break;
+			case 77:
+				if (z >= 50) break;
+				z += 33;
+				break;
+			default:
+				break;
+			}
+			if (GetAsyncKeyState(VK_SPACE)) {
+
+				if (z <= 50) {
+					NHp = Hp;
+					stop = 2;
+					maps();
+					break;
+				}
+				else if (z >= 50) {
+					break;
+				}
+			}
+			
+		}
+
 	}
 
 	return 0;
