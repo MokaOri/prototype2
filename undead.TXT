@@ -1,9 +1,3 @@
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
         .                                                ;aZX:                                      
         .  .                          ... .            XZ;;SSMM2                        ... .       
   .                                            .      rii;,:2a@MM                             .  .  
@@ -39,49 +33,4 @@
                               MM X8a8B2rXZ77S.  MMZ00ZBM7Xr;S0Z8M                                   
                               MMXZa2ZZSS8Wir0S,  :XB0aM0XZBW0a8S8                                   
                              MM S22a2ZW8XM r20Wai  2WMM;X0BZZMZiS                                   
-       ..                       WS8B8B; ;M ,X,Br8MM7MMWS8;X@0Zi2r                       .... .      
-.   ... . ..                   Za;XarX  ,M rX,,X  , MB;.X7Z8Z@i,                        .     . .. .
-  . .                         ,0ZXXB    MM2 i7SMiXX iXMXBZr   :;M                           .       
-           .                   M880ZMB M iS ,i XZ,..7MXiZ    ::,M                                   
- ... . .. ..                   M8aaZ8MBS2XM      iZ0Z8X8S XaZBM M                       .... ,..... 
- .. . ,....                    Mri7:X2i0XS0X88WMMBBZZWZMXr7;X8M                          ..  . .... 
-                               MSXSrW7X.B822808ZZaSZZ,a2ZMMBMBM                                     
-                              aMXXa2XM;arMZ0XX2a2S2ZBZW2M.2rr:M0                                    
-                              0@772X@MSa0iBXa;XZ8a8Z8aZ8B,aX20 i                                    
-                              8BrSSB8WW rZ8Z0XS88Z0aZX@2Z@MaaM                                      
-                              MSiXSaMMMB;i2MZar8Z2aa22X7i;Z@MMM                                     
-                              M2;2M: Zr ,XS0aM:aZa2BX8SWMB28W2                                      
-                              BXaaZ,  iX8XZWMMiSZZS@2Z2S0ZWZ                                        
-                             .0ia.S.:;72iZX@iMZ7Z2XWX7a20ZaM                                        
-                              72M Z ZS W2;2MiBMr8ZrBZaXZ0aSM                                        
-                             MMM. M ;0 rZa:@8iMaZ2XZ00XaZSZM                                        
-                            MMiS  8 iX r:S;7M iMZZ220SS200BMZ                                       
-             .. ...         MZ0M@ ; i8SW8M7;M  MWZ2X8a2i28Z0M   . ...             ..                
-              .    . ..  .  M:,78   ;8MMM08MMS M@8Z7MMM@Z8BaM0  .    .  .  .    ..    .             
-              .      .  .  rr8aB8XiM8MM@WaZMM   :M87iSZMWS0ZBMZ        .  .  : .                    
-              .            MSi ;8X2S;MMMBWMMi    @BZS2SZa0aa8BM                       .             
-                  .   .    Ma0aZZ8Sa.WMM0M7      .MBXaa228aZZ80M    .                 .             
-              .,, ,...... .@SXSX7ZaB7@MMM         2MZX82ZZSMZ88MZ . ,...... ,.,,.:,.,.              
-                          X@XrZZ7ZWWaMMr           BM20888a82Z8BM                                   
-                          BWSXZ27a28Z2M             M@aZa00Z22ZZMW                                  
-                          @0aXZSS0aW0WM              M27Sr2ZaaZZZBM                                 
-                          822rX;SM:WZM7              iM7a2aZ88a8ZSM:                                
-                         @8ZXS72@M;B8M                @M0@08ZZa88Z0M7                               
-                         BS2;;2WWaiBWM                 MSSX2aa2SZaaWM                               
-                         02;8MaaaiZZM,                 BiWa7aZSSaZaaMi                              
-                        7BSSZaS7SB08M                 MMMMMS8BW8222a0M                              
-                        MZ;S;72B0SS8M                MWaW0M2Z8B022ZaaM;                             
-                        M8X2iWrX8BZ@W                 MMM8@MX2aaZZ8ZaMM                             
-                        BaXrBMBa@WBMr           MMM@MMMB0aZWW72a22aBZ8MM                            
-                       SM2; M8MaB08M,          MMMMMMWBWM0BMMZSaBW0ZBMM                             
-        .              Ma70MMMW88B2M  ...        .MMMMMMMBBMMMM@MMMMM8                  ..      .   
-  .                   M0ZMMM@SrBZ0aM7       .  2ZSr i :iii  .iiiiii,i7aX                      .     
-  .   .              7MZMMa00.rZXri7M7  .       ii;.i :,,:,:.r;;;r;ii;27                  .         
-           .           W@ZZ2ZSWB8MMSM                 7;;;;rr;;;;;;;;7X                             
- ,i::,:::::            @MM8M@B08088SS    . ,,i,,,, ,.XXi;i;;ri;iiii;;2                  .::, :,i::,.
-                      ,;.;XMM0SrZBBW@MMM             ;7iiii;iiiiiiii;X                              
-                      S;:.  8MMMMMB00MMM              :7iii::iii::ii7:                              
-                      ri:::.    :ra88ZS0               ;iii:i:iiii:iS                               
-. .........i          ,;i:::::,       .7.              X:::,::::i:i;;                               
-ZB82ZZSZaaSM           .i::,:.,:,,::i ,               :ri:i::::::iiX                                
-                        ,.,,,,,,,,,,i                 X;ii:::i:i:iii                                
+       ..                       WS8B8B; ;M ,X,Br8MM7MMWS8;X@0Zi2r                       .... .   

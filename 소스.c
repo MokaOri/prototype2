@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <time.h>
 
+int up = 0;
 int skillon = 0;
 int skillrand = 0;
 int skill1 = 0;
@@ -2534,9 +2535,11 @@ void lastboss() {
 }
 
 void loading() {
+	srand((unsigned int)time(NULL));
 	gotoxy(41, 15);
 	printf("loading");
 	for (int i = 0; i < 10; i++) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), rand() % 10 + 1);
 		gotoxy(49 + 2 * i, 15);
 		printf("[]");
 		Sleep(250);
@@ -2732,7 +2735,7 @@ void serch() {
 			break;
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
-
+			Sleep(100);
 			if (z == 38) {
 				if (monster == 0) dog();
 				else if (monster == 1) slime();
@@ -2765,19 +2768,36 @@ void startm() {
 	int z = 38, c = 10;
 	while (1) {
 		system("mode con cols=120 lines=40");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		FILE* read = fopen("title.txt", "r");
+		char buffer[10000] = { 0, };
+		fread(buffer, 1, 10000, read);
+		printf("%s", buffer);
+		fclose(read);
 		for (int i = 0; i < 19; i++) {
 			for (int j = 0; j < 60; j++) {
+				gotoxy(2 * j, i);
 				if (start[j][i] == 0) printf("  ");
-				else if (start[j][i] == 1) printf("■");
-				else if (start[j][i] == 2) printf("몬");
+				else if (start[j][i] == 1) {
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+					printf("■");
+				}
+				else if (start[j][i] == 2) {
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+					printf("몬");
+				}
 				else if (start[j][i] == 3) printf("스");
 				else if (start[j][i] == 4) printf("터");
 				else if (start[j][i] == 5) printf("헌");
 				else if (start[j][i] == 6) printf("터");
-				else if (start[j][i] == 7) printf("★");
+				else if (start[j][i] == 7) {
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+					printf("★");
+				}
 			}
 			printf("\n");		
 		}
+		
 		gotoxy(40, 10);
 		printf("플레이                           종료");
 		if (z <= 50) {
@@ -2788,6 +2808,7 @@ void startm() {
 			gotoxy(49, 17);
 			printf("press space to end");
 		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
 		gotoxy(z, c);
 		printf("☞");
 		key = _getch();
@@ -2806,6 +2827,7 @@ void startm() {
 		}
 		system("cls");
 		if (GetAsyncKeyState(VK_SPACE)) {
+			Sleep(100);
 			if (z <= 50) {
 				stop = 2;
 				break;
@@ -2834,82 +2856,98 @@ void battle() {
 			break;
 		}
 		else if (pos < used / 70000 - bravo) {
-			monster = 15;
+			monster = 15 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 50000 - bravo) {
-			monster = 14;
+			monster = 14 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 20000 - bravo) {
-			monster = 13;
+			monster = 13 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 10000 - bravo) {
-			monster = 12;
+			monster = 12 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 8000 - bravo) {
-			monster = 11;
+			monster = 11 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 5000 - bravo) {
-			monster = 10;
+			monster = 10 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 2000 - bravo) {
-			monster = 9;
+			monster = 9 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break; 
 		}
 		else if (pos < used / 1000 - bravo) {
-			monster = 8;
+			monster = 8 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 500 - bravo) {
-			monster = 7;
+			monster = 7 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 100 - bravo) {
-			monster = 6;
+			monster = 6 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used / 10 - bravo) {
-			monster = 5;
+			monster = 5 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used - bravo) {
-			monster = 4;
+			monster = 4 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used * 2 - bravo) {
-			monster = 3;
+			monster = 3 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used * 10 - bravo) {
-			monster = 2;
+			monster = 2 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (pos < used * 2000 - bravo) {
-			monster = 1;
+			monster = 1 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
 		else if (used == 0) {
-			monster = 0;
+			monster = 0 + up;
+			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
@@ -3108,7 +3146,7 @@ void back() {
 			break;
 		}
 		if (GetAsyncKeyState(VK_SPACE)) {
-			
+			Sleep(100);
 			if (z <= 50) {
 				vil2 = 2;
 				vil();
@@ -3133,6 +3171,7 @@ void maps() {
 		for (int i = 0; i < 19; i++) {
 			for (int j = 0; j < 60; j++) {
 				gotoxy(j * 2, i + 10);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
 				if (map[j][i] == 0) printf("  ");
 				else if (map[j][i] == 1) printf("■");
 				else if (map[j][i] == 2) printf("◀");
@@ -3144,6 +3183,7 @@ void maps() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				gotoxy(x + j * 2, y + i);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 				if (player[j][i] == 0) printf("  ");
 				else if (player[j][i] == 1) printf("○");
 				else if (player[j][i] == 2) printf("▽");
@@ -3152,16 +3192,20 @@ void maps() {
 			}
 		}
 		gotoxy(100, 0);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 		printf("HP: %d / %d", Hp, NHp);
 		gotoxy(100, 1);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
 		printf("Gold : %d", Gold);
 		gotoxy(0, 0);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
 		printf("EnCounter : ");
 		for (int i = 0; i <= encounter; i++) {
 			gotoxy(12 + 2 * i, 0);
 			printf("◇");
 		}
-
+		gotoxy(0, 1);
+		printf("%d", monster + up);
 		key = _getch();
 		switch (key) {
 		case 75:
@@ -3183,7 +3227,13 @@ void maps() {
 		default:
 			break;
 		}
+		
+		if (GetAsyncKeyState(VK_F1)) { 
+			Sleep(100);
+			up++; 
+		}
 		pos = rand() % 500 + 1;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		if (pos < encounter) battle();
 		system("cls");
 		if (stop == 1)break;
@@ -3203,7 +3253,7 @@ int main() {
 		if (stop == 2) loading();
 		if (stop == 1) return 0;
 		maps();
-		
+		Sleep(100);
 		if(NHp <= 0){
 			while (1) {
 				system("mode con cols=120 lines=40");
@@ -3229,7 +3279,7 @@ int main() {
 					break;
 				}
 				if (GetAsyncKeyState(VK_SPACE)) {
-
+					Sleep(100);
 					if (z <= 50) {
 						NHp = Hp;
 						stop = 2;
