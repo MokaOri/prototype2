@@ -1,0 +1,89 @@
+else if (used > 4194304000) {
+			monster = 15 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 2097152000) {
+			monster = 14 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 524288000) {
+			monster = 13 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 262144000) {
+			monster = 12 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 65536000) {
+			monster = 11 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 32768000) {
+			monster = 10 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 8192000) {
+			monster = 9 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break; 
+		}
+		else if (used > 4096000) {
+			monster = 8 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 1024000) {
+			monster = 7 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 512000) {
+			monster = 6 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 128000) {
+			monster = 5 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 64000) {
+			monster = 4 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 16000) {
+			monster = 3 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 8000) {
+			monster = 2 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;
+		}
+		else if (used > 2000) {
+			monster = 1 + up;
+			if (monster > 16) monster = 16;
+			serch();
+			break;

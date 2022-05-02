@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
-
+int boss = 0;
 int up = 0;
 int skillon = 0;
 int skillrand = 0;
@@ -28,7 +28,7 @@ int CrtC = 100;
 int vil2 = 1;
 char key2;
 int stop = 0;
-int Gold = 0;
+int Gold = 100000000000;
 int Hp = 100;
 int NHp = 100;
 int Atk = 5;
@@ -317,8 +317,8 @@ void dog() {
 	}
 	z = 0;
 	if (mlife == 0) {
-		printf("½Â¸®! 100°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 100;
+		printf("½Â¸®! 200°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 200;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -455,8 +455,8 @@ void slime() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 200°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 200;
+		printf("½Â¸®! 500°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 500;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -465,8 +465,8 @@ void slime() {
 }
 void frug() {
 	z = 0;
-	int mlife = 90;
-	int matk = 12;
+	int mlife = 300;
+	int matk = 50;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("frug.txt", "r");
@@ -593,8 +593,8 @@ void frug() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 300°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 300;
+		printf("½Â¸®! 1000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 1000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -603,8 +603,8 @@ void frug() {
 }
 void goat() {
 	z = 0;
-	int mlife = 100;
-	int matk = 15;
+	int mlife = 400;
+	int matk = 70;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("goat.txt", "r");
@@ -731,8 +731,8 @@ void goat() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 400°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 400;
+		printf("½Â¸®! 4000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 4000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -741,8 +741,8 @@ void goat() {
 }
 void bat() {
 	z = 0;
-	int mlife = 200;
-	int matk = 20;
+	int mlife = 500;
+	int matk = 80;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("bat.txt", "r");
@@ -869,8 +869,8 @@ void bat() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 500°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 500;
+		printf("½Â¸®! 8000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 8000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -879,8 +879,8 @@ void bat() {
 }
 void lizard() {
 	z = 0;
-	int mlife = 300;
-	int matk = 40;
+	int mlife = 2000;
+	int matk = 110;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("lizard.txt", "r");
@@ -1007,8 +1007,8 @@ void lizard() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 700°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 700;
+		printf("½Â¸®! 32000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 32000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1017,8 +1017,8 @@ void lizard() {
 }
 void ork() {
 	z = 0;
-	int mlife = 350;
-	int matk = 50;
+	int mlife = 2200;
+	int matk = 200;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("ork.txt", "r");
@@ -1145,8 +1145,8 @@ void ork() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 1000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 1000;
+		printf("½Â¸®! 64000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 64000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1155,8 +1155,8 @@ void ork() {
 }
 void imp() {
 	z = 0;
-	int mlife = 500;
-	int matk = 80;
+	int mlife = 2400;
+	int matk = 250;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("imp.txt", "r");
@@ -1283,8 +1283,8 @@ void imp() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 1500°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 1500;
+		printf("½Â¸®! 256000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 256000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1421,8 +1421,8 @@ void undead() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 2000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 2000;
+		printf("½Â¸®! 512000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 512000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1431,8 +1431,8 @@ void undead() {
 }
 void deathknight() {
 	z = 0;
-	int mlife = 1000;
-	int matk = 120;
+	int mlife = 2600;
+	int matk = 300;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("deathknight.txt", "r");
@@ -1559,8 +1559,8 @@ void deathknight() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 3000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 3000;
+		printf("½Â¸®! 2048000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 2048000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1697,8 +1697,8 @@ void dragonfly() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 8000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 8000;
+		printf("½Â¸®! 4096000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 4096000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1707,8 +1707,8 @@ void dragonfly() {
 }
 void dragon() {
 	z = 0;
-	int mlife = 2000;
-	int matk = 200;
+	int mlife = 2800;
+	int matk = 300;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("dragon.txt", "r");
@@ -1835,8 +1835,8 @@ void dragon() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 10000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 10000;
+		printf("½Â¸®! 16384000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 16384000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -1973,8 +1973,8 @@ void satan() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 15000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 15000;
+		printf("½Â¸®! 32768000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 32768000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -2111,8 +2111,8 @@ void demon() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 20000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 20000;
+		printf("½Â¸®! 131072000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 131072000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -2249,8 +2249,8 @@ void deathking() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 50000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 50000;
+		printf("½Â¸®! 262144000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 262144000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -2387,8 +2387,8 @@ void GOD() {
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 100000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 100000;
+		printf("½Â¸®! 1048576000°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
+		Gold += 1548576000;
 		printf("press space to continue");
 		while (1) {
 			if (GetAsyncKeyState(VK_SPACE)) break;
@@ -2843,103 +2843,100 @@ void startm() {
 }
 void battle() {
 	encounter = 0;
-	int bravo = 32767;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	while (1) {
-		system("mode con cols=120 lines=40");
-		pos = rand();
 		
-		if (pos < used / 100000 - bravo) {
+		if (boss == 1) {
 			monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 70000 - bravo) {
+		else if (used > 2097152000) {
 			monster = 15 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 50000 - bravo) {
+		else if (used > 524288000) {
 			monster = 14 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 20000 - bravo) {
+		else if (used > 262144000) {
 			monster = 13 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 10000 - bravo) {
+		else if (used > 65536000) {
 			monster = 12 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 8000 - bravo) {
+		else if (used > 32768000) {
 			monster = 11 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 5000 - bravo) {
+		else if (used > 8192000) {
 			monster = 10 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 2000 - bravo) {
+		else if (used > 4096000) {
 			monster = 9 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break; 
 		}
-		else if (pos < used / 1000 - bravo) {
+		else if (used > 1024000) {
 			monster = 8 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 500 - bravo) {
+		else if (used > 512000) {
 			monster = 7 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 100 - bravo) {
+		else if (used > 128000) {
 			monster = 6 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used / 10 - bravo) {
+		else if (used > 64000) {
 			monster = 5 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used - bravo) {
+		else if (used > 32000) {
 			monster = 4 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used * 2 - bravo) {
+		else if (used > 8000) {
 			monster = 3 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used * 10 - bravo) {
+		else if (used > 2000) {
 			monster = 2 + up;
 			if (monster > 16) monster = 16;
 			serch();
 			break;
 		}
-		else if (pos < used * 2000 - bravo) {
+		else if (used > 0) {
 			monster = 1 + up;
 			if (monster > 16) monster = 16;
 			serch();
@@ -2991,8 +2988,9 @@ void shop(){
 		printf("È¸º¹       °ø°Ý·Â     Ã¼·Â       ¹æ¾î·Â     Ä¡¸íÈ®·ü   µ¹¾Æ°¡±â");
 		gotoxy(z, c);
 		printf("¢Ñ");
+		gotoxy(0, 0);
+		printf("%d", used);
 		key = _getch();
-
 		switch (key) {
 		case 75:
 			if (z == 33) break;
@@ -3010,41 +3008,46 @@ void shop(){
 			if (z == 33) {
 				if (Gold >= Heal)
 					Gold -= Heal;
+					used += Heal;
 					Heal += Heal;
 					NHp = Hp;
-					used += Heal;
+					
 			}
 			else if (z == 44) {
 				if (Gold >= AtkC) {
 					Gold -= AtkC;
+					used += AtkC;
 					AtkC += AtkC;
 					Atk += 10;
-					used += AtkC;
+					
 				}
 			}
 			else if (z == 55) {
 				if (Gold >= HpC) {
 					Gold -= HpC;
+					used += HpC;
 					HpC += HpC;
 					Hp += 100;
 					NHp += 100;
-					used += HpC;
+					
 				}
 			}
 			else if (z == 66) {
 				if (Gold >= DefC) {
 					Gold -= DefC;
+					used += DefC;
 					DefC += DefC;
 					Def += 2;
-					used += DefC;
+					
 				}
 			}
 			else if (z == 77) {
 				if (Gold > CrtC && Crt <= 90) {
 					Gold -= CrtC;
+					used += CrtC;
 					CrtC += CrtC;
 					Crt += 10;
-					used += CrtC;
+					
 				}
 			}
 			else if (z == 88) break;
