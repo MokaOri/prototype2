@@ -5,13 +5,8 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
-/*
-static int g_nScreenIndex;
-static HANDLE g_hScreen[2];
-int g_numofFPS;
-clock_t CurTime, OldTime;
-char* FPSTextInfo;
-*/
+#include <windef.h>
+int speed = 0;
 int boss = 0;
 int up = 0;
 int skillon = 0;
@@ -35,53 +30,12 @@ int CrtC = 100;
 int vil2 = 1;
 char key2;
 int stop = 0;
-int Gold = 100000000000;
+int Gold = 0;
 int Hp = 100;
 int NHp = 100;
 int Atk = 5;
 int Def = 0;
 int Crt = 0;
-/*
-void ScreenInit()
-{
-	CONSOLE_CURSOR_INFO cci;
-
-	// È­¸é ¹öÆÛ 2°³¸¦ ¸¸µç´Ù.
-	g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	g_hScreen[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-
-	// Ä¿¼­¸¦ ¼û±ä´Ù.
-	cci.dwSize = 1;
-	cci.bVisible = FALSE;
-	SetConsoleCursorInfo(g_hScreen[0], &cci);
-	SetConsoleCursorInfo(g_hScreen[1], &cci);
-}
-void ScreenFlipping()
-{
-	SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
-	g_nScreenIndex = !g_nScreenIndex;
-}
-void ScreenClear()
-{
-	COORD Coor = { 0, 0 };
-	DWORD dw;
-	FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', 80 * 25, Coor, &dw);
-}
-
-void ScreenRelease()
-{
-	CloseHandle(g_hScreen[0]);
-	CloseHandle(g_hScreen[1]);
-}
-
-void ScreenPrint(int x, int y, char* string)
-{
-	DWORD dw;
-	COORD CursorPosition = { x, y };
-	SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
-	WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
-}
-*/
 void CursorView() {
 	HANDLE consolHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
@@ -95,67 +49,68 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 
 }
-int map[60][19] = {
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1}
+
+int map[60][2] = {
+	{2,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{0,1},
+	{3,1}
 };
 int player[3][4] = {
 	{0,3,0,3,},
@@ -235,6 +190,7 @@ void Load_Text(const char* text)
 	fclose(file);
 }
 void LASTBOSSBATTLE() {
+	int core[400];
 	int x = 0, y = 24;
 	int i = 0, a = 0;
 	int sx[400];
@@ -242,38 +198,31 @@ void LASTBOSSBATTLE() {
 	encounter = 0;
 	srand((unsigned int)time(NULL));
 	system("cls");
-	
+	for (int j = 0; j < 400; j++) {
+		core[j] = 1;
+	}
 	
 	while (1) {
-		system("cls");
-		system("mode con cols=120 lines=40");
+		
+		Sleep(50 - speed);
+		
 		for (i = a; i < a + 5; i++) {
 			sx[i] = rand() % 60 + 1;
 			sy[i] = 0;
 		}
 		a = i;
 		if (a == 400) break;
-		for (int j = 0; j < a; j++) {
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
-			gotoxy(sx[j] * 2, sy[j]);
-			printf("¢¾");
-			sy[j]++;
-		}
 		
-		for (int i = 0; i < 19; i++) {
-			for (int j = 0; j < 60; j++) {
-				gotoxy(j * 2, i + 10);
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
-				if (map[j][i] == 0) printf("  ");
-				else if (map[j][i] == 1) printf("¡á");
-				else if (map[j][i] == 2) printf("¢¸");
-				else if (map[j][i] == 3) printf("¢º");
-
-			}
-			printf("\n");
-		}
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
+				if (j == 0) {
+					gotoxy(x - 2, y + i);
+					printf("  ");
+				}
+				else if (j == 2) {
+					gotoxy(x + j * 2 + 2, y + i);
+					printf("  ");
+				}
 				gotoxy(x + j * 2, y + i);
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 				if (player[j][i] == 0) printf("  ");
@@ -283,6 +232,30 @@ void LASTBOSSBATTLE() {
 				else if (player[j][i] == 4) printf("¢Ø");
 			}
 		}
+		for (int j = 0; j < a; j++) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+			if (core[j] == 1) {
+				gotoxy(sx[j] * 2, sy[j] - 1);
+				printf("  ");
+				gotoxy(sx[j] * 2, sy[j]);
+				printf("¢¾");
+				sy[j]++;
+			}
+			if (sy[j] > 29) {
+				gotoxy(sx[j] * 2, sy[j]);
+				printf("  ");
+				core[j] = 0;
+			}
+		}
+		for (int l = 0; l < 2; l++) {
+			for (int j = 0; j < 60; j++) {
+				gotoxy(j * 2, 27 + l);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+				if (map[j][l] == 1) printf("¡á");
+
+			}
+			printf("\n");
+		}
 		gotoxy(100, 30);
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
 		printf("HP: %d / %d", Hp, NHp);
@@ -291,17 +264,17 @@ void LASTBOSSBATTLE() {
 				x += 2;
 			}
 			x -= 2;
-			Sleep(50);
+			Sleep(5);
 		}
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			if (x / 2 + 1 == 57) {
 				x -= 2;
 			}
 			x += 2;
-			Sleep(50);
+			Sleep(5);
 		}
 		for (int j = 0; j < a; j++) {
-			if (sx[j] == x / 2 + 1 && sy[j] == y) NHp -= Hp / 5;
+			if (sx[j] == x / 2 + 1 && sy[j] == y) NHp -= Hp / 5 - Def;
 		}
 		if (NHp <= 0) {
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -2527,6 +2500,7 @@ void lastboss() {
 	system("cls");
 	
 	while (1) {
+		if(speed < 22) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		FILE* read = fopen("lastboss.txt", "r");
 		char buffer[10000] = { 0, };
 		fread(buffer, 1, 10000, read);
@@ -2662,13 +2636,22 @@ void lastboss() {
 			}
 			break;
 		}
+		speed += 2;
+		if (speed == 50) speed -= 2;
 
 	}
 	if (mlife == 0) {
-		printf("½Â¸®! 100°ñµå¸¦ Å‰µæÇß´Ù!\n\n");
-		Gold += 100;
-		printf("press space to continue");
+		int color;
 		while (1) {
+			color = rand() % 15 + 1;
+			system("cls");
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+			FILE* read = fopen("VicTory.txt", "r");
+			char buffer[10000] = { 0, };
+			fread(buffer, 1, 10000, read);
+			printf("%s", buffer);
+			fclose(read);
+			stop = 1;
 			if (GetAsyncKeyState(VK_SPACE)) break;
 		}
 	}
@@ -2894,10 +2877,12 @@ void serch() {
 				else if (monster == 14) deathking();
 				else if (monster == 15) GOD();
 				else if (monster == 16) lastboss();
+				system("mode con cols=120 lines=40");
 				break;
 			}
 			else if (z == 71) {
 				NHp = NHp / 2;
+				system("mode con cols=120 lines=40");
 				break;
 			}
 		}
@@ -3295,11 +3280,13 @@ void back() {
 				vil();
 			}
 			else if (z >= 50) {
+				system("mode con cols=120 lines=40");
 				break;
 			}
 		}
 		if (vil2 == 2) {
 			vil2 = 1;
+			system("mode con cols=120 lines=40");
 			break;
 		}
 	}
@@ -3309,11 +3296,11 @@ void maps() {
 	int x = 0, y = 24;
 	encounter = 0;
 	srand((unsigned int)time(NULL));
+	system("cls");
 	while (1) {
-		system("mode con cols=120 lines=40");
-		for (int i = 0; i < 19; i++) {
+		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 60; j++) {
-				gotoxy(j * 2, i + 10);
+				gotoxy(j * 2, 27 + i);
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
 				if (map[j][i] == 0) printf("  ");
 				else if (map[j][i] == 1) printf("¡á");
@@ -3325,6 +3312,14 @@ void maps() {
 		}
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
+				if (j == 0) {
+					gotoxy(x - 2, y + i);
+					printf("  ");
+				}
+				else if (j == 2) {
+					gotoxy(x + j * 2 + 2, y + i);
+					printf("  ");
+				}
 				gotoxy(x + j * 2, y + i);
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 				if (player[j][i] == 0) printf("  ");
@@ -3378,7 +3373,6 @@ void maps() {
 		pos = rand() % 500 + 1;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		if (pos < encounter) battle();
-		system("cls");
 		if (stop == 1)break;
 	}
 }
