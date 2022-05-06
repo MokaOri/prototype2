@@ -5,6 +5,13 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
+/*
+static int g_nScreenIndex;
+static HANDLE g_hScreen[2];
+int g_numofFPS;
+clock_t CurTime, OldTime;
+char* FPSTextInfo;
+*/
 int boss = 0;
 int up = 0;
 int skillon = 0;
@@ -34,6 +41,47 @@ int NHp = 100;
 int Atk = 5;
 int Def = 0;
 int Crt = 0;
+/*
+void ScreenInit()
+{
+	CONSOLE_CURSOR_INFO cci;
+
+	// 화면 버퍼 2개를 만든다.
+	g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	g_hScreen[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+
+	// 커서를 숨긴다.
+	cci.dwSize = 1;
+	cci.bVisible = FALSE;
+	SetConsoleCursorInfo(g_hScreen[0], &cci);
+	SetConsoleCursorInfo(g_hScreen[1], &cci);
+}
+void ScreenFlipping()
+{
+	SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
+	g_nScreenIndex = !g_nScreenIndex;
+}
+void ScreenClear()
+{
+	COORD Coor = { 0, 0 };
+	DWORD dw;
+	FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', 80 * 25, Coor, &dw);
+}
+
+void ScreenRelease()
+{
+	CloseHandle(g_hScreen[0]);
+	CloseHandle(g_hScreen[1]);
+}
+
+void ScreenPrint(int x, int y, char* string)
+{
+	DWORD dw;
+	COORD CursorPosition = { x, y };
+	SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
+	WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
+}
+*/
 void CursorView() {
 	HANDLE consolHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
@@ -186,6 +234,82 @@ void Load_Text(const char* text)
 	printf("%s", buffer);
 	fclose(file);
 }
+void LASTBOSSBATTLE() {
+	int x = 0, y = 24;
+	int i = 0, a = 0;
+	int sx[400];
+	int sy[400];
+	encounter = 0;
+	srand((unsigned int)time(NULL));
+	system("cls");
+	
+	
+	while (1) {
+		system("cls");
+		system("mode con cols=120 lines=40");
+		for (i = a; i < a + 5; i++) {
+			sx[i] = rand() % 60 + 1;
+			sy[i] = 0;
+		}
+		a = i;
+		if (a == 400) break;
+		for (int j = 0; j < a; j++) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+			gotoxy(sx[j] * 2, sy[j]);
+			printf("♥");
+			sy[j]++;
+		}
+		
+		for (int i = 0; i < 19; i++) {
+			for (int j = 0; j < 60; j++) {
+				gotoxy(j * 2, i + 10);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+				if (map[j][i] == 0) printf("  ");
+				else if (map[j][i] == 1) printf("■");
+				else if (map[j][i] == 2) printf("◀");
+				else if (map[j][i] == 3) printf("▶");
+
+			}
+			printf("\n");
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				gotoxy(x + j * 2, y + i);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				if (player[j][i] == 0) printf("  ");
+				else if (player[j][i] == 1) printf("○");
+				else if (player[j][i] == 2) printf("▽");
+				else if (player[j][i] == 3) printf("↗");
+				else if (player[j][i] == 4) printf("↖");
+			}
+		}
+		gotoxy(100, 30);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+		printf("HP: %d / %d", Hp, NHp);
+		if (GetAsyncKeyState(VK_LEFT)) {
+			if (x / 2 - 1 == -1) {
+				x += 2;
+			}
+			x -= 2;
+			Sleep(50);
+		}
+		if (GetAsyncKeyState(VK_RIGHT)) {
+			if (x / 2 + 1 == 57) {
+				x -= 2;
+			}
+			x += 2;
+			Sleep(50);
+		}
+		for (int j = 0; j < a; j++) {
+			if (sx[j] == x / 2 + 1 && sy[j] == y) NHp -= Hp / 5;
+		}
+		if (NHp <= 0) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+			system("cls");
+			break;
+		}
+	}
+}
 
 void dog() {
 	int mlife = 20;
@@ -327,7 +451,7 @@ void dog() {
 }
 void slime() {
 	z = 0;
-	int mlife = 80;
+	int mlife = 60;
 	int matk = 10;
 	srand((unsigned int)time(NULL));
 	system("cls");
@@ -465,7 +589,7 @@ void slime() {
 }
 void frug() {
 	z = 0;
-	int mlife = 300;
+	int mlife = 150;
 	int matk = 50;
 	srand((unsigned int)time(NULL));
 	system("cls");
@@ -603,8 +727,8 @@ void frug() {
 }
 void goat() {
 	z = 0;
-	int mlife = 400;
-	int matk = 70;
+	int mlife = 250;
+	int matk = 60;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("goat.txt", "r");
@@ -741,8 +865,8 @@ void goat() {
 }
 void bat() {
 	z = 0;
-	int mlife = 500;
-	int matk = 80;
+	int mlife = 400;
+	int matk = 70;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("bat.txt", "r");
@@ -879,7 +1003,7 @@ void bat() {
 }
 void lizard() {
 	z = 0;
-	int mlife = 2000;
+	int mlife = 505;
 	int matk = 110;
 	srand((unsigned int)time(NULL));
 	system("cls");
@@ -1017,8 +1141,8 @@ void lizard() {
 }
 void ork() {
 	z = 0;
-	int mlife = 2200;
-	int matk = 200;
+	int mlife = 950;
+	int matk = 120;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("ork.txt", "r");
@@ -1155,8 +1279,8 @@ void ork() {
 }
 void imp() {
 	z = 0;
-	int mlife = 2400;
-	int matk = 250;
+	int mlife = 1500;
+	int matk = 140;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("imp.txt", "r");
@@ -1293,8 +1417,8 @@ void imp() {
 }
 void undead() {
 	z = 0;
-	int mlife = 800;
-	int matk = 100;
+	int mlife = 1250;
+	int matk = 150;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("undead.txt", "r");
@@ -1431,8 +1555,8 @@ void undead() {
 }
 void deathknight() {
 	z = 0;
-	int mlife = 2600;
-	int matk = 300;
+	int mlife = 2000;
+	int matk = 200;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("deathknight.txt", "r");
@@ -1569,8 +1693,8 @@ void deathknight() {
 }
 void dragonfly() {
 	z = 0;
-	int mlife = 1500;
-	int matk = 150;
+	int mlife = 2200;
+	int matk = 210;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("dragonfly.txt", "r");
@@ -1707,8 +1831,8 @@ void dragonfly() {
 }
 void dragon() {
 	z = 0;
-	int mlife = 2800;
-	int matk = 300;
+	int mlife = 2500;
+	int matk = 230;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("dragon.txt", "r");
@@ -1845,7 +1969,7 @@ void dragon() {
 }
 void satan() {
 	z = 0;
-	int mlife = 2500;
+	int mlife = 2700;
 	int matk = 250;
 	srand((unsigned int)time(NULL));
 	system("cls");
@@ -1984,7 +2108,7 @@ void satan() {
 void demon() {
 	z = 0;
 	int mlife = 3000;
-	int matk = 300;
+	int matk = 270;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("demon.txt", "r");
@@ -2121,8 +2245,8 @@ void demon() {
 }
 void deathking() {
 	z = 0;
-	int mlife = 5000;
-	int matk = 400;
+	int mlife = 3300;
+	int matk = 300;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("deathking.txt", "r");
@@ -2259,8 +2383,8 @@ void deathking() {
 }
 void GOD() {
 	z = 0;
-	int mlife = 10000;
-	int matk = 500;
+	int mlife = 3500;
+	int matk = 330;
 	srand((unsigned int)time(NULL));
 	system("cls");
 	FILE* read = fopen("GOD.txt", "r");
@@ -2401,14 +2525,16 @@ void lastboss() {
 	int matk = 800;
 	srand((unsigned int)time(NULL));
 	system("cls");
-	FILE* read = fopen("lastboss.txt", "r");
-	char buffer[10000] = { 0, };
-	fread(buffer, 1, 10000, read);
-	printf("%s", buffer);
-	fclose(read);
+	
 	while (1) {
+		FILE* read = fopen("lastboss.txt", "r");
+		char buffer[10000] = { 0, };
+		fread(buffer, 1, 10000, read);
+		printf("%s", buffer);
+		fclose(read);
 		skillrand = rand() % 100 + 1;
 		crecrt = rand() % 100 + 1;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		Sleep(500);
 		if (z == 0) {
 			gotoxy(0, 0);
@@ -2499,7 +2625,15 @@ void lastboss() {
 		printf("최종보스의 공격!\n\n");
 		Sleep(500);
 		if (matk <= Def) {
-			printf("플레이어가 0의 피해를 입었다.\n\n");
+			system("cls");
+			while (1) {
+				gotoxy(48, 0);
+				printf("press space to Defence");
+				if (GetAsyncKeyState(VK_SPACE)) break;
+				Sleep(50);
+			}
+			LASTBOSSBATTLE();
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		}
 		else if (bar == 1) {
 			printf("플레이어가 0의 피해를 입었다.\n\n");
@@ -2510,8 +2644,14 @@ void lastboss() {
 			effcet = 0;
 		}
 		else {
-			printf("플레이어가 %d의 피해를 입었다.\n\n", matk - Def);
-			NHp -= matk - Def;
+			system("cls");
+			while (1) {
+				gotoxy(48, 0);
+				printf("press space to Defence");
+				if (GetAsyncKeyState(VK_SPACE)) break;
+				Sleep(50);
+			}
+			LASTBOSSBATTLE();
 		}
 		if (NHp <= 0) {
 			printf("플레이어의 힘이 달하여 쓰러졌다\n\nGame Over\n");
