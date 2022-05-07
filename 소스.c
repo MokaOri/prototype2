@@ -3370,6 +3370,10 @@ void maps() {
 			Sleep(100);
 			up++; 
 		}
+		if (GetAsyncKeyState(VK_F2)) {
+			Sleep(100);
+			Gold += 1000000000;
+		}
 		pos = rand() % 500 + 1;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 		if (pos < encounter) battle();
