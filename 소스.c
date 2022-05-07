@@ -1,4 +1,4 @@
-#pragma once
+#pragma comment(lib, "user32")
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h> 
 #include <stdlib.h>
